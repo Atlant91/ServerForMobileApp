@@ -31,11 +31,13 @@ jobs:
     - name: Remote SSH into the server and run the new docker image
       run: |
         echo "{{ secrets.SSH_KEY }}" >> ssh_key
+        chmod  0700 ssh_key
         ssh -i ssh_key -o StrictHostKeyChecking=no  atlant@34.116.210.243
         docker stop backend 
         docker container prune 
         docker rmi atlant91/connectivity:latest 
         docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
+        rm -f ssh_key
     
     - name: The finnish
       run: |
