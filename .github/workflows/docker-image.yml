@@ -34,7 +34,7 @@ jobs:
         
     - name: SSH into the vm instance and start the server
       run: |    
-        ssh atlant@34.116.210.243
+        ssh -o StrictHostKeyChecking=no atlant@34.116.210.243
         docker stop backend 
         docker container prune --force
         docker rmi atlant91/connectivity:latest 
