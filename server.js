@@ -12,7 +12,7 @@ admin.initializeApp({
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(middleware.decodeToken);
+// app.use(middleware.decodeToken);
 const db = admin.firestore();
 
 app.get('/', (req, res) => {
