@@ -12,7 +12,7 @@ admin.initializeApp({
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(middleware.decodeToken);
+// app.use(middleware.decodeToken);
 const db = admin.firestore();
 
 app.get('/', (req, res) => {
@@ -29,7 +29,7 @@ app.post('/create', async (req, res) => {
             dateOfBirth: req.body.dateOfBirth,
             connectionStatus: req.body.connectionStatus,
             lastConnection: req.body.lastConnection,
-            deviceFactoryId: req.body.deviceFactoryId,
+            deviceFactory: req.body.deviceFactoryId,
             batteryLevel: req.body.batteryLevel,
         };
         console.log(userJson);
@@ -69,8 +69,6 @@ app.get('/transmissions', (req, res) => {
             {
                 title: 'Patient Initiated',
                 sessionDate: '25 July 12:59PM-2023',
-                // serialNumber:'123456789',
-                // manifacturer:'MDT',
             },
             {
                 title: 'Scheduled',
@@ -101,6 +99,51 @@ app.get('/transmissions', (req, res) => {
         ],
     })
 })
+app.get('/transmissionLatest', (req, res) => {
+    const transmissions = [
+        {
+            title: 'Patient Initiated',
+            sessionDate: '25 July 12:59PM-2023',
+        },
+        {
+            title: 'Scheduled',
+            sessionDate: '24 July 12:40PM-2023',
+        },
+        {
+            title: 'Disconnected for 3 days',
+        },
+        {
+            title: 'Data Sent',
+            sessionDate: '20 July 12:40PM-2023',
+        },
+        {
+            title: 'Scheduled',
+            sessionDate: '19 July 12:40PM-2023',
+        },
+        {
+            title: 'Disconnected for 3 days',
+        },
+        {
+            title: 'Data Sent',
+            sessionDate: '15 July 12:40PM-2023',
+        },
+        {
+            title: 'Scheduled',
+            sessionDate: '14 July 12:40PM-2023',
+        }
+    ];
+
+    // Convert date strings to Date objects and sort in descending order
+    transmissions.sort((a, b) => new Date(b.sessionDate) - new Date(a.sessionDate));
+
+    // Return only the newest transmission
+    const newestTransmission = transmissions[0];
+
+    // Send the response
+    res.json({
+        transmission: newestTransmission,
+    });
+});
 
 
 const port = 3000;
