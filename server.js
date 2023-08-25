@@ -29,7 +29,7 @@ app.post('/create', async (req, res) => {
             dateOfBirth: req.body.dateOfBirth,
             connectionStatus: req.body.connectionStatus,
             lastConnection: req.body.lastConnection,
-            deviceFactory: req.body.deviceFactoryId,
+            deviceFactory: req.body.deviceFactory,
             batteryLevel: req.body.batteryLevel,
         };
         console.log(userJson);
