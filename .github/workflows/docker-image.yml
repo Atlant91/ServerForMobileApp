@@ -27,3 +27,16 @@ jobs:
       run: |
         docker tag backend:latest atlant91/connectivity:latest
         docker push atlant91/connectivity:latest
+
+    - name: Remote SSH into the server and run the new docker image
+      run: |
+        ssh -i {{ secrets.SSH_KEY }} -o StrictHostKeyChecking=no  atlant@{{ secrets.IP_ADDRESS }}
+        docker stop backend 
+        docker container prune 
+        docker rmi atlant91/connectivity:latest 
+        docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
+    
+    - name: The finnish
+      run: |
+        echo "Everything finnished succesfully"
+        
