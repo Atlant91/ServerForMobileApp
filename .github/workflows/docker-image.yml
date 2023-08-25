@@ -28,15 +28,20 @@ jobs:
         docker tag backend:latest atlant91/connectivity:latest
         docker push atlant91/connectivity:latest
 
-    - name: Remote SSH into the server and run the new docker image
+    - name: Set up SSH key+
       run: |
-        echo "{{ secrets.SSH_KEY }}" >> ssh_key
-        chmod  600 ssh_key
-        ssh -i ssh_key -o StrictHostKeyChecking=no  atlant@34.116.210.243
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/andivm
+        cat ~/.ssh/andivm
+        ssh-keyscan -t 34.116.210.243 >> ~/.ssh/known_hosts
+        
+    - name: SSH into the vm instance and start the server
+      run: |    
+        ssh -i ~/.ssh/andivm atlant@34.116.210.243
         docker stop backend 
-        docker container prune 
+        docker container prune --force
         docker rmi atlant91/connectivity:latest 
-        docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
+        sudo docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
         rm -f ssh_key
     
     - name: The finnish
