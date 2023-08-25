@@ -1,17 +1,27 @@
-const admin=require("firebase-admin");
-class Middleware{
-    async decodeToken(req,res,next){
-        const token = req.headers.authorization.split(" ")[1];
-        try{
-        const decodedToken=await admin.auth().verifyIdToken(token);
-        console.log(decodedToken);
-        if(decodedToken){
-            return next();
+const admin = require("firebase-admin");
+
+class Middleware {
+    async decodeToken(req, res, next) {
+        const authHeader = req.headers.authorization;
+
+        if (!authHeader) {
+            return res.status(401).json({ message: "Unauthorized - No token provided" });
         }
-        return res.json({message:"Un authorized"});
-    }catch(error){
-        return res.json({message:"Internal error"});
+
+        const token = authHeader.split(" ")[1];
+        try {
+            const decodedToken = await admin.auth().verifyIdToken(token);
+            console.log(decodedToken);
+            
+            if (decodedToken) {
+                return next();
+            }
+
+            return res.status(401).json({ message: "Unauthorized" });
+        } catch (error) {
+            return res.status(500).json({ message: "Internal error" });
+        }
     }
 }
-}
-module.exports=new Middleware();
+
+module.exports = new Middleware();
