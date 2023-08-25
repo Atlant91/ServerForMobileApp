@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = admin.firestore();
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the Firebase BACKEND for the Flutter App -91!!!!!!!!!!!!!!Kadale be mo kaq shume pikecuditese');
+    res.send('Welcome to the Firebase BACKEND for the Flutter App -91!!!!!!!!!!!!!!');
 });
 
 app.post('/create', async (req, res) => {

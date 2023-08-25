@@ -40,9 +40,5 @@ jobs:
           docker rmi atlant91/connectivity:latest 
           sudo docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
         EOF
-        rm -f ssh_key
-    
-    - name: The finnish
-      run: |
-        echo "Everything finnished succesfully"
+
         
