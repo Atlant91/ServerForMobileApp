@@ -30,7 +30,8 @@ jobs:
 
     - name: Remote SSH into the server and run the new docker image
       run: |
-        ssh -i {{ secrets.SSH_KEY }} -o StrictHostKeyChecking=no  atlant@{{ secrets.IP_ADDRESS }}
+        echo "{{ secrets.SSH_KEY }}" >> ssh_key
+        ssh -i ssh_key -o StrictHostKeyChecking=no  atlant@{{ secrets.IP_ADDRESS }}
         docker stop backend 
         docker container prune 
         docker rmi atlant91/connectivity:latest 
