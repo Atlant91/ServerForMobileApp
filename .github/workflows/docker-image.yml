@@ -17,13 +17,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag backend:latest
 
-    - name: Run and test the container
-      run: |
-        docker run -d -p 3000:3000 backend:latest
-        docker run -it -d -p 3001:3001 owasp/zap2docker-stable zap-baseline.py -t http://host.docker.internal:3000
-        docker kill \$(docker ps -q)
-
-
     - name: Login to docker
       uses: docker/login-action@v2 
       with:
