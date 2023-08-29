@@ -30,11 +30,11 @@ jobs:
     
     - name: Test container with snyk
       run: |
-        snyk container test backend:latest --file=Dockerfile --severity-threshold=high
+        snyk container test backend:latest --file=Dockerfile
       
     - name: Test code dependecies
       run: |
-        snyk test --severity-threshold=high
+        snyk test
 
     - name: Tag and push
       run: |
@@ -56,6 +56,3 @@ jobs:
       
     - name: DAST test using ZAP
       run: |
-
-    - name: Logout from snyk
-      run: snyk logout
