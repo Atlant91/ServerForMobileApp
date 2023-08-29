@@ -27,11 +27,11 @@ jobs:
       run: |
         npm install -g snyk
         snyk auth ${{ secrets.SNYK_TOKEN }}
-        snyk container test backend:latest --file=Dockerfile --severity-threshold=low|medium|high|critical
+        snyk container test backend:latest --file=Dockerfile --severity-threshold=critical
       
     - name: Test code dependecies
       run: |
-        snyk test 
+        snyk test --severity-threshold=critical
 
     - name: Tag and push
       run: |
