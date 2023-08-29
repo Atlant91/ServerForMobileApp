@@ -23,15 +23,18 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWD }}
     
-    - name: Install snyk and test the container
+    - name: Install snyk and authenticate to snyk
       run: |
         npm install -g snyk
         snyk auth ${{ secrets.SNYK_TOKEN }}
-        snyk container test backend:latest --file=Dockerfile --severity-threshold=critical
+    
+    - name: Test container with snyk
+      run: |
+        snyk container test backend:latest --file=Dockerfile --severity-threshold=high
       
     - name: Test code dependecies
       run: |
-        snyk test --severity-threshold=critical
+        snyk test --severity-threshold=high
 
     - name: Tag and push
       run: |
@@ -54,3 +57,5 @@ jobs:
     - name: DAST test using ZAP
       run: |
 
+    - name: Logout from snyk
+      run: snyk logout
