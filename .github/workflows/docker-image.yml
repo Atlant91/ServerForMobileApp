@@ -23,12 +23,15 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWD }}
     
-    - name: Install snyk
+    - name: Install snyk and test the container
       run: |
         npm install -g snyk
         snyk auth {{ secrets.SNYK_TOKEN }}
-        snyk container test backend:latest --file=Dockerfile 
+        snyk container test backend:latest --file=Dockerfile --severity-threshold=low|medium|high|critical
       
+    - name: Test code dependecies
+      run: |
+        snyk test 
 
     - name: Tag and push
       run: |
