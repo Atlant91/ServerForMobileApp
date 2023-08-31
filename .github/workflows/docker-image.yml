@@ -44,21 +44,21 @@ jobs:
       
     
 
-    - name: Tag and push
-      run: |
-        docker tag backend:latest atlant91/connectivity:latest
-        docker push atlant91/connectivity:latest
-    - name: Set up ssh key
-      uses: webfactory/ssh-agent@v0.7.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_KEY }}
+    # - name: Tag and push
+    #   run: |
+    #     docker tag backend:latest atlant91/connectivity:latest
+    #     docker push atlant91/connectivity:latest
+    # - name: Set up ssh key
+    #   uses: webfactory/ssh-agent@v0.7.0
+    #   with:
+    #     ssh-private-key: ${{ secrets.SSH_KEY }}
         
-    - name: SSH into the vm instance and start the server
-      run: |    
-        ssh -o StrictHostKeyChecking=no atlant@34.116.210.243 << EOF
-          docker kill \$(docker ps -q)  
-          docker container prune --force
-          docker rmi atlant91/connectivity:latest 
-          sudo docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
-        EOF
+    # - name: SSH into the vm instance and start the server
+    #   run: |    
+    #     ssh -o StrictHostKeyChecking=no atlant@34.116.210.243 << EOF
+    #       docker kill \$(docker ps -q)  
+    #       docker container prune --force
+    #       docker rmi atlant91/connectivity:latest 
+    #       sudo docker run -d -p 3000:3000 --name backend atlant91/connectivity:latest 
+    #     EOF
       
