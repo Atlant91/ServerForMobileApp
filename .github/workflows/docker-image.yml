@@ -25,7 +25,7 @@ jobs:
         snyk test --severity-threshold=high
 
     - name: Monitor
-      run: snuk monitor --org-name="nothing-just-a-test"
+      run: snyk monitor --org-name="nothing-just-a-test"
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag backend:latest
