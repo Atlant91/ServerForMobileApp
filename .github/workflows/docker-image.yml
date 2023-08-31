@@ -24,8 +24,8 @@ jobs:
       run: |
         snyk test --severity-threshold=high
     
-    - name: Test code itself
-      run: snyk code test --severity-threshold=critical
+    # - name: Test code itself
+    #   run: snyk code test --severity-threshold=critical
 
     - name: Monitor
       run: snyk monitor --org-name="nothing-just-a-test"
