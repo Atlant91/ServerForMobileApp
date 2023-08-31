@@ -43,7 +43,7 @@ jobs:
     
     - name: Test container with snyk
       run: |
-        snyk container test backend:latest --file=Dockerfile --severity-threshold=high
+        snyk container monitor --org-name="nothing-just-a-test" backend:latest --file=Dockerfile --severity-threshold=high
       
     
 
